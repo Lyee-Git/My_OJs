@@ -1,6 +1,6 @@
 #include<iostream>
 using namespace std;
-#define OJ
+//#define OJ
 
 template<class T>
 class deque
@@ -103,6 +103,9 @@ int main()
         }
     }
     BFS();
+    for(int i = 0; i < rows; i++)
+        delete[] labyrinth[i];
+    delete[] labyrinth;
 #ifndef OJ
     system("pause");
 #endif
