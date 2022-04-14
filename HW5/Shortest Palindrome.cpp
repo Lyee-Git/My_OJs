@@ -24,12 +24,13 @@ int main()
 {
     string T;
     cin >> T;
-    int res = 0, *next = new int[2 * T.length() + 1], len = T.length();
+    int res = 0, *next = new int[2 * T.length() + 2], len = T.length();
     string T_add_reverse(T);
+    T_add_reverse.push_back('$');
     for (int i = 0; i < len; i++)
         T_add_reverse.push_back(T[len - 1 - i]);
     buildNext(next, T_add_reverse);
-    res = len - next[2 * len];
+    res = len - next[2 * len + 1];
     cout << res << endl;
     delete[] next;
 #ifndef OJ
