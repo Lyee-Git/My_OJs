@@ -23,7 +23,7 @@ private:
     int HeapSize;
     void percolateDown(int i);
     void percolateUp(int i);
-    //void Heapify(int n);
+    void Heapify();
 };
 
 template<class T> void Heap<T>::percolateDown(int i)
@@ -57,6 +57,12 @@ template<class T> void Heap<T>::percolateUp(int i)
         else
             break;
     }
+}
+
+template<class T> void Heap<T>::Heapify()
+{
+    for (int i = ((HeapSize - 1) - 1) >> 1; i >= 0; i--)
+        percolateDown(i);
 }
 
 template<class T> void Heap<T>::insert(T e)
@@ -124,7 +130,7 @@ public:
 };
 
 // The Part of Median of Median Algorithm
-int SELECT_WLINEAR(int *elem, int lo, int hi, int k);
+int BFPRT(int *elem, int lo, int hi, int k);
 
 int median(int *elem, int lo, int hi)
 {
@@ -138,7 +144,7 @@ int MedianOfMedian(int *elem, int lo, int hi)
     int medians[len];
     for (int i = 0; i < len; i++)
         medians[i] = median(elem, lo + i * 5, lo + i * 5 + 4 < hi ? lo + i * 5 + 4 : hi);
-    return SELECT_WLINEAR(medians, 0, len - 1, len >> 1); // Use len >> 1 instead of (len - 1) >> 1 to avoid segmentation fault
+    return BFPRT(medians, 0, len - 1, len >> 1); // Use len >> 1 instead of (len - 1) >> 1 to avoid segmentation fault
 }
 
 // Get Range[2]: Elements within [Range[0], Range[1]] equal pivot
@@ -172,7 +178,7 @@ void Partition(int *elem, int *range, int lo, int hi, int pivot)
     range[1] = left + offset;
 }
 
-int SELECT_WLINEAR(int *elem, int lo, int hi, int k)
+int BFPRT(int *elem, int lo, int hi, int k)
 {
     if (lo == hi)
         return elem[lo];
@@ -182,9 +188,9 @@ int SELECT_WLINEAR(int *elem, int lo, int hi, int k)
     if (k >= range[0] && k <= range[1])
         return elem[k];
     else if (k < range[0])
-        return SELECT_WLINEAR(elem, lo, range[0] - 1, k);
+        return BFPRT(elem, lo, range[0] - 1, k);
     else
-        return SELECT_WLINEAR(elem, range[1] + 1, hi, k);
+        return BFPRT(elem, range[1] + 1, hi, k);
 }
 
 int main()
@@ -195,7 +201,7 @@ int main()
     for (int i = 0; i < n; i++)
        scanf("%d", &elem[i]);
     int mid = (n - 1) >> 1;
-    int median = SELECT_WLINEAR(elem, 0, n - 1, mid);
+    int median = BFPRT(elem, 0, n - 1, mid);
     Heap<int_greater> MaxHeap;
     Heap<int_less> MinHeap;
     for (int i = mid - 1; i >= 0; i--)
