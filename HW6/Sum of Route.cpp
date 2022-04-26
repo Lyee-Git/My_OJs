@@ -59,7 +59,11 @@ void buildTree(TreeNode* &root, string* nodes, int N, int i)
 }
 
 void preOrder(TreeNode *root) {
+<<<<<<< HEAD
     if(root != nullptr) {
+=======
+    if(root != NULL) {
+>>>>>>> b570a1cacf94d6cfee5245028b7ef4e4e6761927
         cout << root->val << " ";
         preOrder(root->left);
         preOrder(root->right);
