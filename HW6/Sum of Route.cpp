@@ -59,7 +59,7 @@ void buildTree(TreeNode* &root, string* nodes, int N, int i)
 }
 
 void preOrder(TreeNode *root) {
-    if(root != NULL) {
+    if(root != nullptr) {
         cout << root->val << " ";
         preOrder(root->left);
         preOrder(root->right);
