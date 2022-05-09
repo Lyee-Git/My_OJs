@@ -13,7 +13,7 @@ struct TreeNode {
 
 int idx = 0, p_val, q_val;
 
-TreeNode *CreateTree(int *a, int size, TreeNode *&p, TreeNode *&q)
+TreeNode *CreateTree(int *a, int size)
 {
     if (idx >= size || a[idx] == -1)
     {
@@ -21,39 +21,40 @@ TreeNode *CreateTree(int *a, int size, TreeNode *&p, TreeNode *&q)
         return nullptr;
     }
     TreeNode *root = new TreeNode(a[idx]);
-    if (a[idx] == p_val)
-        p = root;
-    else if (a[idx] == q_val)
-        q = root;
     idx++;
-    root->left = CreateTree(a, size, p, q);
-    root->right = CreateTree(a, size, p, q);
+    root->left = CreateTree(a, size);
+    root->right = CreateTree(a, size);
     return root;
 }
 
-bool DFS(TreeNode *root, TreeNode* p, TreeNode* q, TreeNode *& res){
+TreeNode* DFS(TreeNode *root, int p, int q){
     if (root == nullptr)
-        return false;
-    bool inLC = DFS(root->left, p, q, res); // p or q in left subtree of root
-    bool inRC = DFS(root->right, p, q, res);
-    bool Equal = root == p || root == q;
-    if (Equal && (inLC || inRC) || inLC && inRC)
-        res = root;
-    return Equal || inRC || inLC;
+        return nullptr;
+    if (root->val == p || root->val == q)
+        return root;
+    TreeNode *left = DFS(root->left, p, q);
+    TreeNode *right = DFS(root->right, p, q);
+    if (left && right)
+        return root;
+    else if (left == nullptr)
+        return right;
+    else if (right == nullptr)
+        return left;
+    else // if (left == nullptr && right == nullptr)
+        return nullptr;
 }
 
 int main()
 {
-    int *nodes = new int[10002], temp = 0, n = 0;
+    int *nodes = new int[20000], temp = 0, n = 0;
     while (cin >> temp)
         nodes[n++] = temp;
     p_val = nodes[n - 2];
     q_val = nodes[n - 1];
     n -= 2;
     TreeNode *p, *q;
-    TreeNode *root = CreateTree(nodes, n, p, q);
-    TreeNode *res;
-    DFS(root, p, q, res);
+    TreeNode *root = CreateTree(nodes, n);
+    TreeNode *res = DFS(root, p_val, q_val);;
     cout << res->val << endl;
 #ifndef OJ
     system("pause");
