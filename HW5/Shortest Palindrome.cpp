@@ -6,8 +6,8 @@ using namespace std;
 
 void buildNext(int *next, string P)
 {
-    int len = P.length() + 1, j = 0; // One more char than usual to get length of same prefix & suffix of string P
-    int i = next[0] = -1; // i : pointer of pattern
+    int len = P.length() + 1; // One more char than usual to get length of same prefix & suffix of string P
+    int i = next[0] = -1, j = 0; // i : pointer of pattern
     while (j < len - 1)
     {
         if (i < 0 || P[i] == P[j])

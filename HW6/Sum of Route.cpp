@@ -23,7 +23,7 @@ struct TreeNode {
 
 int prefix_num_mapping[SIZE];
 
-void splitString(string& tree, string* nodes)
+void String(string& tree, string* nodes)
 {
     int nodes_pos = 0;
     tree.push_back(' ');
