@@ -34,9 +34,7 @@ template<class T> void Heap<T>::percolateDown(int i)
         j = rc;
     if (j != i)
     {
-        T temp = elem[i];
-        elem[i] = elem[j];
-        elem[j] = temp;
+        swap(elem[i], elem[j]);
         percolateDown(j);
     }
 }
@@ -48,9 +46,7 @@ template<class T> void Heap<T>::percolateUp(int i)
         int j = (i - 1) >> 1;
         if (elem[i] > elem[j])
         {
-            T temp = elem[i];
-            elem[i] = elem[j];
-            elem[j] = temp;
+            swap(elem[i], elem[j]);
             i = j;
         }
         else
